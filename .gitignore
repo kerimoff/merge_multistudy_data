@@ -1,0 +1,5 @@
+work/
+data/
+singularity_img/
+.nextflow*
+slurm*

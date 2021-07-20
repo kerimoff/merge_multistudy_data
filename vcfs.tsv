@@ -1,0 +1,8 @@
+vcf	sample_metadata	feature_counts	study_name
+/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/vcf/TwinsUK_Human610.all_variants.vcf.gz	/gpfs/space/home/kerimov/SampleArcheology/studies/cleaned/TwinsUK.tsv	/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/fc/TwinsUK_merged_gene_counts.txt	TwinsUK
+/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/vcf/TwinsUK_HumanHap300.all_variants.vcf.gz	/gpfs/space/home/kerimov/SampleArcheology/studies/cleaned/TwinsUK.tsv	/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/fc/TwinsUK_merged_gene_counts.txt	TwinsUK
+/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/vcf/GENCORD_genotyped.all_variants.vcf.gz	/gpfs/space/home/kerimov/SampleArcheology/studies/cleaned/GENCORD.tsv	/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/fc/GENCORD_merged_gene_counts.txt	GENCORD
+/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/vcf/CAP_HumanOmni25Exome.all_variants.vcf.gz	/gpfs/space/home/kerimov/SampleArcheology/studies/cleaned/CAP.tsv	/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/fc/CAP_merged_gene_counts.txt	CAP
+/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/vcf/CAP_HumanHap300v1.all_variants.vcf.gz	/gpfs/space/home/kerimov/SampleArcheology/studies/cleaned/CAP.tsv	/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/fc/CAP_merged_gene_counts.txt	CAP
+/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/vcf/CAP_HumanOmni25Exome.all_variants.vcf.gz	/gpfs/space/home/kerimov/SampleArcheology/studies/cleaned/CAP.tsv	/gpfs/hpc/projects/eQTLCatalogue/joined_study_qtlmap_temp/fc/CAP_merged_gene_counts.txt	CAP
+
