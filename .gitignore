@@ -1,5 +1,6 @@
-work/
+work
 data/
-singularity_img/
+singularity_img
 .nextflow*
 slurm*
+results

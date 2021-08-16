@@ -2,6 +2,7 @@ nextflow.enable.dsl=2
 
 process index_vcf{
     tag "index_vcf"
+    container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
     cpus 1
     memory { 4.GB * task.attempt }
     time { 2.h * task.attempt }
@@ -22,6 +23,9 @@ process index_vcf{
 
 process merge_vcf {
     tag "merge_vcf"
+    cpus 2
+    time { 36.h * task.attempt }
+    memory { 16.GB * task.attempt }
     container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
     publishDir "${params.outdir}/vcf", mode: 'copy'
 
@@ -32,7 +36,7 @@ process merge_vcf {
     output:
     path "merged.vcf.gz"
 
-    """
+    """    
     bcftools merge --threads ${task.cpus} -Oz -o merged.vcf.gz ${input_vcfs.join(' ')} 
     """
 }
