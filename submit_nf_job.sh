@@ -1,10 +1,11 @@
 #!/bin/bash
 
-#SBATCH --time=48:00:00
+#SBATCH --time=72:00:00
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=5G
 #SBATCH --job-name="pipe_merge_vcf"
+#SBATCH --partition=amd
 
 # Load needed system tools (Java 8 is required, one of singularity or anaconda - python 2.7 is needed,
 # depending on the method for dependancy management). The exact names of tool modules might depend on HPC.

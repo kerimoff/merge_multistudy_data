@@ -126,7 +126,6 @@ Channel.fromPath(params.studyFile)
     .ifEmpty { error "Cannot find studyFile file in: ${params.studyFile}" }
     .splitCsv(header: true, sep: '\t', strip: true)
     .map{row -> file(row.vcf)}
-    .view()
     .set { index_vcf_ch }
     
 Channel.fromPath(params.studyFile)
@@ -135,30 +134,32 @@ Channel.fromPath(params.studyFile)
     .map{row -> file(row.sample_metadata)}
     .unique()
     .collect()
-    .view()
     .set { sample_metadata_ch }
 
 Channel.fromPath(params.studyFile)
     .ifEmpty { error "Cannot find studyFile file in: ${params.studyFile}" }
     .splitCsv(header: true, sep: '\t', strip: true)
-    .map{row -> file(row.feature_counts)}
-    .unique()
-    .collect()
+    .map{row -> [ row.study_name, file(row.feature_counts) ]}  
+    .unique{ it[1] }
     .view()
     .set { feature_counts_ch }
 
 
 include { extract_samples_from_vcf; index_vcf; merge_vcf; filter_vcf } from './modules/vcf_manupilations'
-include { select_samples } from './modules/metadata_manupilations'
+include { select_samples; rename_file } from './modules/metadata_manupilations'
 
 workflow {
+  print("in_workflow")
+  //rename the feature_counts file so that they are unique
+  rename_file(feature_counts_ch)
+
   // merge and filter vcfs
   index_vcf(index_vcf_ch)
   merge_vcf(index_vcf.out[0].collect(), index_vcf.out[1].collect())
   filter_vcf(merge_vcf.out)
 
   // prepare metadata of selected cell_type(qtl_group)
-  select_samples(sample_metadata_ch.collect(), feature_counts_ch.collect())
+  select_samples(sample_metadata_ch.collect(), rename_file.out.collect())
   extract_samples_from_vcf(filter_vcf.out, select_samples.out.genotype_ids)
 }
 

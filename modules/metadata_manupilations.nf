@@ -27,3 +27,20 @@ process select_samples{
         -c ${params.cell_type}
     """
 }
+
+process rename_file{
+    container = 'quay.io/eqtlcatalogue/susie-finemapping:v20.08.1'
+    tag "rename_file"
+
+    input:
+    tuple val(study_name), path(fc_file)
+
+    output:
+    path "${study_name}_${fc_file}"
+
+    script:
+    """
+    mv $fc_file ${study_name}_${fc_file}
+    """
+}
+

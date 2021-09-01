@@ -3,4 +3,5 @@ data/
 singularity_img
 .nextflow*
 slurm*
-results
+results*
+submit*.sh
