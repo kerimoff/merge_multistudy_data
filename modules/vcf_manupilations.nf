@@ -74,3 +74,20 @@ process extract_samples_from_vcf {
     bcftools view -S $sample_names -Oz -o ${genotype_vcf.simpleName}_extracted.vcf.gz --force-samples $genotype_vcf
     """
 }
+
+// Drops all the fields in FORMAT except GT and DS
+process update_format {
+    tag "update_format"
+    container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
+    // publishDir "${params.outdir}/vcf", mode: 'copy'
+
+    input:
+    file(vcf) 
+
+    output:
+    file ("${vcf.simpleName}_annotated.vcf.gz")
+
+    """
+    bcftools annotate -x "^FORMAT/GT,FORMAT/DS" -Oz -o ${vcf.simpleName}_annotated.vcf.gz $vcf
+    """
+}
