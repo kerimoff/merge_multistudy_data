@@ -53,7 +53,7 @@ process filter_vcf {
     file ("${vcf.simpleName}_filtered.vcf.gz")
 
     """
-    bcftools filter -i 'MAF[0] > 0.01' -Oz -o ${vcf.simpleName}_filtered.vcf.gz $vcf
+    bcftools +fill-tags $vcf | bcftools filter -i 'MAF[0] > 0.01' -Oz -o ${vcf.simpleName}_filtered.vcf.gz 
     """
 }
 
