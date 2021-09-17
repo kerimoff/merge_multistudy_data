@@ -126,7 +126,7 @@ Channel.fromPath(params.studyFile)
     .ifEmpty { error "Cannot find studyFile file in: ${params.studyFile}" }
     .splitCsv(header: true, sep: '\t', strip: true)
     .map{row -> file(row.vcf)}
-    .set { index_vcf_ch }
+    .set { update_format_ch }
     
 Channel.fromPath(params.studyFile)
     .ifEmpty { error "Cannot find studyFile file in: ${params.studyFile}" }
@@ -145,7 +145,7 @@ Channel.fromPath(params.studyFile)
     .set { feature_counts_ch }
 
 
-include { extract_samples_from_vcf; index_vcf; merge_vcf; filter_vcf } from './modules/vcf_manupilations'
+include { extract_samples_from_vcf; index_vcf; merge_vcf; filter_vcf; update_format } from './modules/vcf_manupilations'
 include { select_samples; rename_file } from './modules/metadata_manupilations'
 
 workflow {
@@ -154,7 +154,8 @@ workflow {
   rename_file(feature_counts_ch)
 
   // merge and filter vcfs
-  index_vcf(index_vcf_ch)
+  update_format(update_format_ch)
+  index_vcf(update_format.out)
   merge_vcf(index_vcf.out[0].collect(), index_vcf.out[1].collect())
   filter_vcf(merge_vcf.out)
 

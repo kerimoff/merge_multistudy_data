@@ -43,6 +43,7 @@ process merge_vcf {
 
 process filter_vcf {
     tag "filter_vcf"
+    time { 12.h * task.attempt }
     container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
     publishDir "${params.outdir}/vcf", mode: 'copy'
 
@@ -78,6 +79,7 @@ process extract_samples_from_vcf {
 // Drops all the fields in FORMAT except GT and DS
 process update_format {
     tag "update_format"
+    time { 12.h * task.attempt }
     container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
     // publishDir "${params.outdir}/vcf", mode: 'copy'
 
