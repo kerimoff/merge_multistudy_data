@@ -12,6 +12,7 @@ process select_samples{
     output:
     path "merged_metadata.tsv"
     path "joined_feature_counts.tsv"
+    path "joined_feature_counts_filtered.tsv"
     path "genotype_ids.tsv", emit: genotype_ids
 
     script:
