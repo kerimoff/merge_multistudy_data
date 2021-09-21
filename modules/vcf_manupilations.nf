@@ -43,7 +43,7 @@ process merge_vcf {
 
 process filter_vcf {
     tag "filter_vcf"
-    time { 12.h * task.attempt }
+    time { 48.h * task.attempt }
     container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
     publishDir "${params.outdir}/vcf", mode: 'copy'
 
@@ -61,7 +61,8 @@ process filter_vcf {
 process extract_samples_from_vcf {
     tag "extract_samples"
     publishDir "${params.outdir}/vcf", mode: 'copy'
-    container = 'quay.io/eqtlcatalogue/qtlmap:v20.05.1'
+    time { 48.h * task.attempt }
+    container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
 
     input:
     path genotype_vcf
@@ -91,5 +92,22 @@ process update_format {
 
     """
     bcftools annotate -x "^FORMAT/GT,FORMAT/DS" -Oz -o ${vcf.simpleName}_annotated.vcf.gz $vcf
+    """
+}
+
+process R2_filter{
+    tag "R2_filter"
+    time { 24.h * task.attempt }
+    container = 'quay.io/eqtlcatalogue/genimpute:v20.06.1'
+
+    input:
+    file(vcf) 
+
+    output:
+    file("${vcf.simpleName}_R2filtered.vcf.gz")
+
+    script:
+    """
+    bcftools filter -i 'INFO/R2 > 0.4' ${vcf} -Oz -o ${vcf.simpleName}_R2filtered.vcf.gz
     """
 }
